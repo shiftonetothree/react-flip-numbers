@@ -12,6 +12,9 @@ type Props = {
   perspective?: number,
   duration?: number,
   delay?: number,
+  delayBetween?: number,
+  delayBetweenFrom?: 'left' | 'right',
+  loop?: number,
   animate?: boolean,
   play?: boolean,
   numberStyle?: { [string]: string | number },
@@ -24,6 +27,8 @@ export default class FlipNumbers extends React.Component<Props> {
     animate: true,
     play: false,
     delay: 0,
+    delayBetween: 0,
+    delayBetweenFrom: 'right',
     nonNumberStyle: {},
     numberStyle: {},
   };
@@ -35,6 +40,9 @@ export default class FlipNumbers extends React.Component<Props> {
       nextProps.width !== this.props.width ||
       nextProps.duration !== this.props.duration ||
       nextProps.delay !== this.props.delay ||
+      nextProps.delayBetween !== this.props.delayBetween ||
+      nextProps.delayBetweenFrom !== this.props.delayBetweenFrom ||
+      nextProps.loop !== this.props.loop ||
       nextProps.play !== this.props.play
     );
   }
@@ -53,6 +61,9 @@ export default class FlipNumbers extends React.Component<Props> {
       animate,
       play,
       delay,
+      delayBetween,
+      delayBetweenFrom,
+      loop,
     } = this.props;
     let numberCounter = 0;
 
@@ -74,6 +85,10 @@ export default class FlipNumbers extends React.Component<Props> {
 
           if (animate) {
             numberCounter += 1;
+            let realDelay = delay;
+            if (delayBetween !== undefined) {
+              realDelay = delayBetweenFrom === 'left' ? delay + delayBetween * key : delay + delayBetween * (numbers.length - 1 - key);
+            }
             return !Number.isNaN(parseInt(n, 10)) ? (
               <FlipNumber
                 {...{
@@ -85,7 +100,8 @@ export default class FlipNumbers extends React.Component<Props> {
                   perspective,
                   duration,
                   play,
-                  delay,
+                  delay: realDelay,
+                  loop,
                   numberStyle,
                 }}
                 position={numberCounter}

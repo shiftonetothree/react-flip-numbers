@@ -23,6 +23,7 @@ type Props = {
   perspective: number,
   duration: number,
   activeNumber: number,
+  loop?: number,
   delay: number,
   play: boolean,
   numberStyle: { [string]: string | number },
@@ -33,7 +34,7 @@ type State = {
   rotateCounter: number,
 };
 
-const calculateDegrees = (rotateCounter, activeNumber) => {
+const calculateDegrees = (rotateCounter, activeNumber, loop = 0) => {
   const animateDegree = numbers.findIndex(v => v === activeNumber) * rotateDegreePerNumber;
   const amountDegree = rotateCounter * revolutionDegrees;
 
@@ -43,19 +44,25 @@ const calculateDegrees = (rotateCounter, activeNumber) => {
           rotateCounter: rotateCounter > resetRouteCounter ? 0 : rotateCounter + 1,
         }
       : null),
-    degree: amountDegree - animateDegree,
+    degree: amountDegree - animateDegree + loop * revolutionDegrees,
   };
 };
 
 export default class FlipNumber extends React.Component<Props, State> {
-  static getDerivedStateFromProps({ activeNumber }: Props, { rotateCounter }: State) {
-    return calculateDegrees(rotateCounter, activeNumber);
+  static defaultProps = {
+    loop: 0,
+  }
+
+  static getDerivedStateFromProps({ activeNumber, loop }: Props, { rotateCounter }: State) {
+    return calculateDegrees(rotateCounter, activeNumber, loop);
   }
 
   state = {
     degree: 0,
     rotateCounter: 0, // eslint-disable-line react/no-unused-state
-  };
+  }
+
+  updateNumberTimeout: TimeoutID;
 
   componentDidMount() {
     this.updateNumberTimeout = setTimeout(() => this.updateNumber(), 50 * this.props.position);
@@ -76,10 +83,8 @@ export default class FlipNumber extends React.Component<Props, State> {
   }
 
   updateNumber = () => {
-    this.setState(({ rotateCounter }) => calculateDegrees(rotateCounter, this.props.activeNumber));
-  };
-
-  updateNumberTimeout: TimeoutID;
+    this.setState(({ rotateCounter }) => calculateDegrees(rotateCounter, this.props.activeNumber, this.props.loop));
+  }
 
   render() {
     const {
