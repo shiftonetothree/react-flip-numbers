@@ -15,6 +15,6 @@ type Props = {
     play: boolean,
     numberStyle: React.CSSProperties,
   };
-export class FlipNumber extends React.Component<Props>{
+export default class FlipNumber extends React.Component<Props>{
     
 }

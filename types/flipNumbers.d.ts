@@ -33,6 +33,6 @@ type Props = {
     numberStyle?: React.CSSProperties,
 };
 
-export class FlipNumbers extends React.Component<Props>{
+export default class FlipNumbers extends React.Component<Props>{
 
 }
