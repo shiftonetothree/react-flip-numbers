@@ -150,6 +150,8 @@ export default class FlipNumber extends React.Component<Props, State> {
                     color,
                     background,
                     backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
+                    MozBackfaceVisibility: 'hidden',
                     transform: `rotateX(${rotateDegreePerNumber * i}deg) translateZ(${translateZ}px)`,
                     ...numberStyle,
                   }}
