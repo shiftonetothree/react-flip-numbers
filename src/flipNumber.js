@@ -35,7 +35,7 @@ type State = {
 };
 
 const calculateDegrees = (rotateCounter, activeNumber, loop = 0) => {
-  const animateDegree = numbers.findIndex(v => v === activeNumber) * rotateDegreePerNumber;
+  const animateDegree = numbers.findIndex(v => v === activeNumber) * rotateDegreePerNumber + loop * revolutionDegrees;
   const amountDegree = rotateCounter * revolutionDegrees;
 
   return {
@@ -44,7 +44,7 @@ const calculateDegrees = (rotateCounter, activeNumber, loop = 0) => {
           rotateCounter: rotateCounter > resetRouteCounter ? 0 : rotateCounter + 1,
         }
       : null),
-    degree: amountDegree - animateDegree + loop * revolutionDegrees,
+    degree: amountDegree - animateDegree,
   };
 };
 
@@ -132,7 +132,9 @@ export default class FlipNumber extends React.Component<Props, State> {
             transform: `rotateX(${degree}deg)`,
           }}
           {...{ easeType, duration, delay }}
-          render={({ style }) => (
+          render={({ style }) => {
+            console.log(style);
+            return (
             <span style={style}>
               {numbers.map((n, i) => (
                 <span
