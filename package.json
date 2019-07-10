@@ -3,6 +3,11 @@
   "version": "3.0.1",
   "description": "react flip your numbers",
   "main": "lib/index.js",
+  "files": [
+    "types",
+    "lib"
+  ],
+  "types": "./types/index.d.ts",
   "keywords": [
     "react",
     "number",
