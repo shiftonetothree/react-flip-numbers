@@ -132,9 +132,7 @@ export default class FlipNumber extends React.Component<Props, State> {
             transform: `rotateX(${degree}deg)`,
           }}
           {...{ easeType, duration, delay }}
-          render={({ style }) => {
-            console.log(style);
-            return (
+          render={({ style }) => (
             <span style={style}>
               {numbers.map((n, i) => (
                 <span
@@ -163,7 +161,6 @@ export default class FlipNumber extends React.Component<Props, State> {
             </span>
           )}
         />
-
         <span
           data={length - position}
           style={{
