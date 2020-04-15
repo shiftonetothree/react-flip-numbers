@@ -34,45 +34,43 @@ type State = {
   rotateCounter: number,
 };
 
-/** caculate nerest degree */ 
+/** caculate nerest degree */
 const calculateDegrees = (rotateCounter, degree, activeNumber, loop = 0) => {
   const targetIndex = numbers.findIndex(v => v === activeNumber);
-  
-  
-  const currentIndex = ((degree * - 1) / rotateDegreePerNumber) % numbers.length;
-  if(currentIndex<0){
+
+  let currentIndex = ((degree * -1) / rotateDegreePerNumber) % numbers.length;
+  if (currentIndex < 0) {
     currentIndex = numbers.length + currentIndex;
   }
 
-  
   const diff = targetIndex - currentIndex;
   let direction = 0;
 
-  
+
   if (diff === 0) {
     // n -> n
     direction = 0;
-  } else if (-9 <= diff && diff < -5) {
+  } else if (diff >= -9 && diff < -5) {
     // 9 -> 0
     // 9 -> 1
     // 9 -> 2
     // 9 -> 3
     direction = 1;
-  } else if (-5 <= diff && diff < 0) {
+  } else if (diff >= -5 && diff < 0) {
     // 9 -> 4
     // 9 -> 5
     // 9 -> 6
     // 9 -> 7
     // 9 -> 8
     direction = 0;
-  } else if (0 < diff && diff <= 5) {
+  } else if (diff > 0 && diff <= 5) {
     // 0 -> 1
     // 0 -> 2
     // 0 -> 3
     // 0 -> 4
     // 0 -> 5
     direction = 0;
-  } else if (5 < diff && diff <= 9) {
+  } else if (diff > 5 && diff <= 9) {
     // 0 -> 6
     // 0 -> 7
     // 0 -> 8
@@ -88,7 +86,7 @@ const calculateDegrees = (rotateCounter, degree, activeNumber, loop = 0) => {
 
   return {
     rotateCounter: newRotateCounter,
-    degree: - amountDegree - animateDegree,
+    degree: -amountDegree - animateDegree,
   };
 };
 
@@ -127,7 +125,7 @@ export default class FlipNumber extends React.Component<Props, State> {
   }
 
   updateNumber = () => {
-    this.setState(({ rotateCounter }) => calculateDegrees(rotateCounter, this.state.degree, this.props.activeNumber, this.props.loop));
+    this.setState(({ rotateCounter, degree }) => calculateDegrees(rotateCounter, degree, this.props.activeNumber, this.props.loop));
   }
 
   render() {
