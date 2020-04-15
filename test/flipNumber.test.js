@@ -39,19 +39,30 @@ describe('FlipNumber', () => {
 
     expect(tree.instance().shouldComponentUpdate(nextProps)).toBeTruthy();
 
-    tree.setState({
-      degree: 1,
+    const tree2 = shallow(
+      <FlipNumber {...{
+        ...props,
+        activeNumber: 1,
+      }} />
+    );
+
+    tree2.setState({
       isStatic: false,
     });
 
-    const nextState = {
+    const nextProps2 = {
+      ...props,
+      activeNumber: 1,
+    };
+
+    const nextState2 = {
       degree: 1,
       rotateCounter: 0,
       rotateDegreePerNumber: 0,
       isStatic: false,
     };
 
-    expect(tree.instance().shouldComponentUpdate(nextProps, nextState)).toBeFalsy();
+    expect(tree2.instance().shouldComponentUpdate(nextProps2, nextState2)).toBeFalsy();
 
     expect(
       tree.instance().shouldComponentUpdate({
