@@ -38,13 +38,13 @@ const calculateDegrees = (rotateCounter, activeNumber, loop = 0) => {
   const animateDegree = numbers.findIndex(v => v === activeNumber) * rotateDegreePerNumber + loop * revolutionDegrees;
   const amountDegree = rotateCounter * revolutionDegrees;
 
+  let newRotateCounter = activeNumber === 0 ? rotateCounter + 1 : rotateCounter;
+  newRotateCounter = rotateCounter > resetRouteCounter ? 0 : newRotateCounter;
+  const amountDegree = newRotateCounter * revolutionDegrees;
+
   return {
-    ...(activeNumber === 0
-      ? {
-          rotateCounter: rotateCounter > resetRouteCounter ? 0 : rotateCounter + 1,
-        }
-      : null),
-    degree: amountDegree - animateDegree,
+    rotateCounter: newRotateCounter,
+    degree: - amountDegree - animateDegree,
   };
 };
 
