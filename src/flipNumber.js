@@ -36,7 +36,6 @@ type State = {
 
 const calculateDegrees = (rotateCounter, activeNumber, loop = 0) => {
   const animateDegree = numbers.findIndex(v => v === activeNumber) * rotateDegreePerNumber + loop * revolutionDegrees;
-  const amountDegree = rotateCounter * revolutionDegrees;
 
   let newRotateCounter = activeNumber === 0 ? rotateCounter + 1 : rotateCounter;
   newRotateCounter = rotateCounter > resetRouteCounter ? 0 : newRotateCounter;
